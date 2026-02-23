@@ -15,8 +15,10 @@ fn main() {
     logging::setup_logger().expect("Could not set up loggers.");
     log::info!("Launching app...");
     tauri::Builder::default()
-        .system_tray(tray::get_system_tray())
-        .on_system_tray_event(tray::handle_tray_event)
+        .setup(|app| {
+            tray::setup_system_tray(app.handle());
+            Ok(())
+        })
         .on_window_event(handle_window_event)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

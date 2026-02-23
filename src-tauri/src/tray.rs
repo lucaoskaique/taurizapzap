@@ -5,9 +5,13 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 use std::process;
+use tauri::{
+    menu::{Menu, MenuItemBuilder},
+    tray::TrayIconBuilder,
+    AppHandle, Manager,
+};
 
-use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, Wry};
-
+#[derive(Clone, Copy)]
 enum TrayIdentifier {
     Hide,
     Show,
@@ -15,14 +19,20 @@ enum TrayIdentifier {
     Unimplemented,
 }
 
+impl TrayIdentifier {
+    fn as_str(&self) -> &'static str {
+        match self {
+            TrayIdentifier::Quit => "quit",
+            TrayIdentifier::Unimplemented => "unimplemented",
+            TrayIdentifier::Hide => "hide",
+            TrayIdentifier::Show => "show",
+        }
+    }
+}
+
 impl Into<String> for TrayIdentifier {
     fn into(self) -> String {
-        match self {
-            TrayIdentifier::Quit => "quit".to_owned(),
-            TrayIdentifier::Unimplemented => "unimplemented".to_owned(),
-            TrayIdentifier::Hide => "hide".to_owned(),
-            TrayIdentifier::Show => "show".to_owned(),
-        }
+        self.as_str().to_owned()
     }
 }
 
@@ -37,64 +47,81 @@ impl From<String> for TrayIdentifier {
     }
 }
 
-pub(crate) fn get_system_tray_menu(is_hidden: bool) -> SystemTrayMenu {
-    log::debug!("Generating system tray menu...");
+pub(crate) fn build_system_tray_menu(app: &AppHandle, is_hidden: bool) -> Menu<tauri::Wry> {
+    log::debug!("Building system tray menu...");
     log::trace!("is hidden: {}", is_hidden);
-    let hide_item = CustomMenuItem::new(TrayIdentifier::Hide, "Hide");
-    let show_item = CustomMenuItem::new(TrayIdentifier::Show, "Show");
-    let quit_item = CustomMenuItem::new(TrayIdentifier::Quit, "Quit");
-    SystemTrayMenu::new()
-        .add_item(match is_hidden {
-            true => show_item,
-            false => hide_item,
+
+    let menu = Menu::new(app).expect("Could not create menu");
+
+    if is_hidden {
+        let show_item = MenuItemBuilder::with_id(TrayIdentifier::Show.as_str(), "Show")
+            .build(app)
+            .expect("Could not create show item");
+        menu.append(&show_item).expect("Could not append show item");
+    } else {
+        let hide_item = MenuItemBuilder::with_id(TrayIdentifier::Hide.as_str(), "Hide")
+            .build(app)
+            .expect("Could not create hide item");
+        menu.append(&hide_item).expect("Could not append hide item");
+    }
+
+    let quit_item = MenuItemBuilder::with_id(TrayIdentifier::Quit.as_str(), "Quit")
+        .build(app)
+        .expect("Could not create quit item");
+    menu.append(&quit_item).expect("Could not append quit item");
+
+    menu
+}
+
+pub fn setup_system_tray(app: &AppHandle) {
+    log::debug!("Setting up system tray...");
+    let menu = build_system_tray_menu(app, false);
+    TrayIconBuilder::with_id("main")
+        .menu(&menu)
+        .on_menu_event(move |app, event| {
+            handle_tray_menu_event(app, event.id().as_ref());
         })
-        .add_item(quit_item)
+        .build(app)
+        .expect("Could not create tray icon");
 }
 
-pub fn get_system_tray() -> SystemTray {
-    log::debug!("Generating system tray...");
-    let tray_menu = get_system_tray_menu(false);
-    SystemTray::new().with_menu(tray_menu)
-}
-
-pub fn handle_tray_event(app: &AppHandle<Wry>, event: SystemTrayEvent) {
-    log::debug!("Handling tray event...");
+fn handle_tray_menu_event(app: &AppHandle, id: &str) {
+    log::debug!("Handling tray menu event...");
 
     let main_window = app
-        .get_window("main")
+        .get_webview_window("main")
         .expect("Could not get the main window.");
 
-    match event {
-        SystemTrayEvent::MenuItemClick { id, .. } => {
-            let tray_ident = TrayIdentifier::from(id.clone());
+    let tray_ident = TrayIdentifier::from(id.to_string());
 
-            match tray_ident {
-                TrayIdentifier::Quit => {
-                    log::info!("Quitting app by system tray request...");
-                    process::exit(0);
-                }
-                TrayIdentifier::Unimplemented => {
-                    log::warn!("An unimplemented system tray event was dispatched.");
-                    log::warn!("event id: {}", id);
-                }
-                TrayIdentifier::Hide => {
-                    log::info!("Hiding app window by system tray request...");
-                    main_window.hide().expect("Could not hide the main window.");
-                    log::info!("Replacing system tray...");
-                    app.tray_handle()
-                        .set_menu(get_system_tray_menu(true))
-                        .expect("Could not set system tray menu.");
-                }
-                TrayIdentifier::Show => {
-                    log::info!("Showing app window by system tray request...");
-                    main_window.show().expect("Could not show the main window.");
-                    log::info!("Replacing system tray...");
-                    app.tray_handle()
-                        .set_menu(get_system_tray_menu(false))
-                        .expect("Could not set system tray menu.");
-                }
-            }
+    match tray_ident {
+        TrayIdentifier::Quit => {
+            log::info!("Quitting app by system tray request...");
+            process::exit(0);
         }
-        _ => {}
+        TrayIdentifier::Unimplemented => {
+            log::warn!("An unimplemented system tray event was dispatched.");
+            log::warn!("event id: {}", id);
+        }
+        TrayIdentifier::Hide => {
+            log::info!("Hiding app window by system tray request...");
+            main_window.hide().expect("Could not hide the main window.");
+            log::info!("Updating system tray menu...");
+            let menu = build_system_tray_menu(app, true);
+            app.tray_by_id("main")
+                .expect("Could not get tray")
+                .set_menu(Some(menu))
+                .expect("Could not set menu");
+        }
+        TrayIdentifier::Show => {
+            log::info!("Showing app window by system tray request...");
+            main_window.show().expect("Could not show the main window.");
+            log::info!("Updating system tray menu...");
+            let menu = build_system_tray_menu(app, false);
+            app.tray_by_id("main")
+                .expect("Could not get tray")
+                .set_menu(Some(menu))
+                .expect("Could not set menu");
+        }
     }
 }
