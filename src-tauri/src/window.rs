@@ -4,32 +4,19 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-use tauri::{GlobalWindowEvent, Manager};
+use tauri::Manager;
 
-use crate::tray;
+pub fn setup_window_handlers(app: &tauri::AppHandle) {
+    log::debug!("Setting up window event handlers...");
 
-pub fn handle_window_event(event: GlobalWindowEvent) {
-    log::debug!("Handling window event...");
-
-    let window_event = event.event();
-
-    match window_event {
-        tauri::WindowEvent::CloseRequested { api, .. } => {
-            api.prevent_close();
-            event.window().app_handle().tray_handle().set_menu(match event.window().is_visible() {
-                Ok(is_visible) => tray::get_system_tray_menu(is_visible),
-                Err(err) => {
-                    log::error!("An error occured while getting the window's visibility property. Setting it to visible...");
-                    log::error!("Window visibility property access error: {}", err);
-                    tray::get_system_tray_menu(false)
-                },
-            }).expect("Could not set system tray menu.");
-
-            event
-                .window()
-                .hide()
-                .expect("Could not hide the main window.");
-        }
-        _ => {}
+    if let Some(window) = app.get_webview_window("main") {
+        let window_clone = window.clone();
+        window.on_window_event(move |event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                log::info!("Close requested, hiding window instead...");
+                api.prevent_close();
+                let _ = window_clone.hide();
+            }
+        });
     }
 }
