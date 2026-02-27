@@ -1,0 +1,61 @@
+{
+  "reacoes": [
+    {
+      "timestamp": "2026-02-24T20:05:30.123Z",
+      "messageId": "3EB0ABCD1234567890ABCDEF",
+      "participanteAvaliado": "João",
+      "emoji": "❤️",
+      "votanteJid": "5511999990002@s.whatsapp.net",
+      "votanteNome": "Maria",
+      "isPropriaReacao": false,
+      "isValida": true,
+      "grupoId": "120363XXXXXXXXX@g.us"
+    },
+    {
+      "timestamp": "2026-02-24T20:06:15.456Z",
+      "messageId": "3EB0DCBA0987654321FEDCBA",
+      "participanteAvaliado": "Maria",
+      "emoji": "🙂",
+      "votanteJid": "5511999990001@s.whatsapp.net",
+      "votanteNome": "João",
+      "isPropriaReacao": false,
+      "isValida": true,
+      "grupoId": "120363XXXXXXXXX@g.us"
+    },
+    {
+      "timestamp": "2026-02-24T20:07:45.789Z",
+      "messageId": "3EB0EFGH5678901234GHIJKL",
+      "participanteAvaliado": "Pedro",
+      "emoji": "💣",
+      "votanteJid": "5511999990004@s.whatsapp.net",
+      "votanteNome": "Ana",
+      "isPropriaReacao": false,
+      "isValida": true,
+      "grupoId": "120363XXXXXXXXX@g.us"
+    },
+    {
+      "timestamp": "2026-02-24T20:08:22.001Z",
+      "messageId": "3EB0ABCD1234567890ABCDEF",
+      "participanteAvaliado": "João",
+      "emoji": "👍",
+      "votanteJid": "5511999999999@s.whatsapp.net",
+      "votanteNome": null,
+      "isPropriaReacao": true,
+      "isValida": false,
+      "grupoId": "120363XXXXXXXXX@g.us"
+    },
+    {
+      "timestamp": "2026-02-24T20:09:10.555Z",
+      "messageId": "3EB0DCBA0987654321FEDCBA",
+      "participanteAvaliado": "Maria",
+      "emoji": "🔥",
+      "votanteJid": "5511988887777@s.whatsapp.net",
+      "votanteNome": "Carlos",
+      "isPropriaReacao": false,
+      "isValida": false,
+      "grupoId": "120363XXXXXXXXX@g.us"
+    }
+  ],
+  "dataInicio": "2026-02-24T20:00:00.000Z",
+  "totalReacoes": 5
+}

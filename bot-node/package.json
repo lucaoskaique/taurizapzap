@@ -1,0 +1,45 @@
+{
+  "name": "queridometro-bot",
+  "version": "1.0.0",
+  "description": "Bot do Queridômetro usando Baileys",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "clean": "tsx scripts/clean.ts",
+    "clean:all": "tsx scripts/clean.ts --placar",
+    "clean:data": "tsx scripts/clean.ts --data",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "queridometro",
+    "baileys",
+    "typescript"
+  ],
+  "author": "Eray Erdin",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "express": "^4.18.2",
+    "node-schedule": "^2.1.1",
+    "pino": "^8.19.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "@types/node-schedule": "^2.1.5",
+    "@types/qrcode-terminal": "^0.12.2",
+    "rimraf": "^5.0.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

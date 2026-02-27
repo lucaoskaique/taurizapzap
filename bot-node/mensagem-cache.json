@@ -1,0 +1,116 @@
+{
+  "votacaoAtiva": false,
+  "grupoId": "556493227973-1527525423@g.us",
+  "dataInicio": "2026-02-25T00:26:38.825Z",
+  "mensagens": [
+    {
+      "messageId": "3A9F987F23E59DD591EB",
+      "texto": "@208310259154988",
+      "mentions": [
+        "208310259154988@lid"
+      ],
+      "participanteNome": "208310259154988@lid",
+      "timestamp": "2026-02-25T01:42:02.877Z"
+    },
+    {
+      "messageId": "3A63B27999B00B9438DD",
+      "texto": "ba e o escandiuizzi @49688610926617 @166370004181048",
+      "mentions": [
+        "49688610926617@lid",
+        "166370004181048@lid"
+      ],
+      "participanteNome": "49688610926617@lid",
+      "timestamp": "2026-02-25T02:19:17.722Z"
+    },
+    {
+      "messageId": "ACE8C3626BB0F12B1D83141CBEA84D41",
+      "texto": "@49688610926617",
+      "mentions": [
+        "49688610926617@lid"
+      ],
+      "participanteNome": "49688610926617@lid",
+      "timestamp": "2026-02-25T02:25:33.563Z"
+    },
+    {
+      "messageId": "3ACDF35EAC6EC622843D",
+      "texto": "@186126753128623 minas tá afundando??",
+      "mentions": [
+        "186126753128623@lid"
+      ],
+      "participanteNome": "186126753128623@lid",
+      "timestamp": "2026-02-25T11:37:27.372Z"
+    },
+    {
+      "messageId": "3AA9125D8ACEFA1C492D",
+      "texto": "@186126753128623 saudades do repo pra cantar i love no seu ouvidinho",
+      "mentions": [
+        "186126753128623@lid"
+      ],
+      "participanteNome": "186126753128623@lid",
+      "timestamp": "2026-02-25T14:21:22.318Z"
+    },
+    {
+      "messageId": "3A093CBDA03C8D9CADCA",
+      "texto": "@22793458602078",
+      "mentions": [
+        "22793458602078@lid"
+      ],
+      "participanteNome": "22793458602078@lid",
+      "timestamp": "2026-02-25T14:25:16.320Z"
+    },
+    {
+      "messageId": "3A9D38974C032F7A8A32",
+      "texto": "@256023168307270 venha defender o lula",
+      "mentions": [
+        "256023168307270@lid"
+      ],
+      "participanteNome": "256023168307270",
+      "timestamp": "2026-02-25T15:01:38.588Z"
+    },
+    {
+      "messageId": "3A34895B7B0CD93C930E",
+      "texto": "@52883965927557 vamos jogar mimesis",
+      "mentions": [
+        "52883965927557@lid"
+      ],
+      "participanteNome": "52883965927557@lid",
+      "timestamp": "2026-02-25T15:04:38.764Z"
+    },
+    {
+      "messageId": "3A00E34A84A20FAC2D0C",
+      "texto": "@211578729287885",
+      "mentions": [
+        "211578729287885@lid"
+      ],
+      "participanteNome": "211578729287885@lid",
+      "timestamp": "2026-02-25T15:06:01.920Z"
+    },
+    {
+      "messageId": "3AD1DBF429F437F24F51",
+      "texto": "@127612118687957",
+      "mentions": [
+        "127612118687957@lid"
+      ],
+      "participanteNome": "127612118687957@lid",
+      "timestamp": "2026-02-25T15:07:49.059Z"
+    },
+    {
+      "messageId": "3A78782F1A1418E09ABA",
+      "texto": "Leilão encerrado. Vendido para @41927554687121",
+      "mentions": [
+        "41927554687121@lid"
+      ],
+      "participanteNome": "41927554687121@lid",
+      "timestamp": "2026-02-25T17:00:28.172Z"
+    },
+    {
+      "messageId": "3EB092C393ABA9A26BA077",
+      "texto": "@49688610926617 felicidades, incrível que tu e o bottini fazem no mesmo dia",
+      "mentions": [
+        "49688610926617@lid"
+      ],
+      "participanteNome": "49688610926617@lid",
+      "timestamp": "2026-02-25T17:07:30.015Z"
+    }
+  ]
+}

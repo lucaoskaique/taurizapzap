@@ -1,0 +1,9 @@
+node_modules/
+dist/
+auth_info/
+data/*.json
+!data/*.example.json
+!data/README.md
+.env
+*.log
+*.tsbuildinfo

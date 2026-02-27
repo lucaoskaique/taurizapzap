@@ -1,0 +1,21 @@
+{
+  "mensagens": [
+    {
+      "messageId": "3EB0ABCD1234567890ABCDEF",
+      "participanteNome": "João",
+      "timestamp": "2026-02-24T20:00:15.123Z"
+    },
+    {
+      "messageId": "3EB0DCBA0987654321FEDCBA",
+      "participanteNome": "Maria",
+      "timestamp": "2026-02-24T20:00:16.456Z"
+    },
+    {
+      "messageId": "3EB0EFGH5678901234GHIJKL",
+      "participanteNome": "Pedro",
+      "timestamp": "2026-02-24T20:00:17.789Z"
+    }
+  ],
+  "dataAbertura": "2026-02-24T20:00:00.000Z",
+  "grupoId": "120363XXXXXXXXX@g.us"
+}
