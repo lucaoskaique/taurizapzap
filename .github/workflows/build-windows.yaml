@@ -1,16 +1,20 @@
 name: build_windows
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   Build:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -19,14 +23,10 @@ jobs:
         run: npm install
       
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
       
       - name: Rust Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
@@ -36,3 +36,40 @@ jobs:
       
       - name: Build Tauri App
         run: npm run tauri:build
+      
+      - name: Collect Artifacts
+        shell: pwsh
+        run: |
+          $exePath = Get-ChildItem -Path "src-tauri/target/release" -Filter "*.exe" | Select-Object -First 1
+          if ($exePath) {
+            Copy-Item $exePath.FullName -Destination "./taurizapzap.exe"
+          }
+          $msiPath = Get-ChildItem -Path "src-tauri/target/release/bundle/msi" -Filter "*.msi" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($msiPath) {
+            Copy-Item $msiPath.FullName -Destination "./taurizapzap.msi"
+          }
+      
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: taurizapzap-windows-exe
+          path: taurizapzap.exe
+          retention-days: 30
+      
+      - name: Upload MSI Artifact
+        uses: actions/upload-artifact@v4
+        if: hashFiles('taurizapzap.msi') != ''
+        with:
+          name: taurizapzap-windows-msi
+          path: taurizapzap.msi
+          retention-days: 30
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            taurizapzap.exe
+            taurizapzap.msi
+          draft: false
+          prerelease: false
