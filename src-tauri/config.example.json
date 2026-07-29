@@ -1,0 +1,26 @@
+{
+  "grupo_id": "120363XXXXXXXXX@g.us",
+  "participantes": [
+    {
+      "nome": "João",
+      "numero": "5511999990001"
+    },
+    {
+      "nome": "Maria",
+      "numero": "5511999990002"
+    },
+    {
+      "nome": "Pedro",
+      "numero": "5511999990003"
+    },
+    {
+      "nome": "Ana",
+      "numero": "5511999990004"
+    }
+  ],
+  "horario_abertura": "0 0 20 * * * *",
+  "horario_fechamento": "0 0 22 * * * *",
+  "pontos_participacao": 2,
+  "pontos_penalidade": -1,
+  "caminho_placar": "./placar.json"
+}

@@ -1,0 +1,39 @@
+#!/bin/sh
+# Guard against the payload-injection pattern that hit this repo (2026-04):
+# obfuscated code hidden at the end of a very long single line, plus
+# executable droppers (config.bat etc.). Blocks the commit if found.
+
+fail() { echo "pre-commit: BLOCKED — $1" >&2; exit 1; }
+
+# Files staged for commit (added/copied/modified), NUL-safe.
+staged=$(git diff --cached --name-only --diff-filter=ACM -z | tr '\0' '\n')
+
+[ -z "$staged" ] && exit 0
+
+# Skip generated/vendored files that legitimately contain long lines.
+skip_re='node_modules/|src-tauri/target/|src-tauri/gen/schemas/|package-lock\.json$|\.min\.(js|css)$|dist/assets/'
+
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  echo "$f" | grep -qE "$skip_re" && continue
+
+  # 1) Executable droppers.
+  case "$f" in
+    *.bat|*.cmd|*.ps1|*.vbs|*.scr|*.hta)
+      fail "executable dropper staged: $f (remove it before committing)"
+      ;;
+  esac
+
+  # 2) Suspiciously long lines in source/config files (payload hiding spot).
+  case "$f" in
+    *.js|*.ts|*.mjs|*.cjs|*.json|*.html|*.css|*.sh)
+      if [ -f "$f" ] && grep -qE '.{800,}' "$f"; then
+        fail "very long line in $f (possible obfuscated payload). Inspect before committing."
+      fi
+      ;;
+  esac
+done <<EOF
+$staged
+EOF
+
+exit 0

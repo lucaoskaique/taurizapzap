@@ -1,0 +1,16 @@
+!.vscode
+node_modules
+
+# Build artifacts
+taurizapzap.exe
+*.msi
+dist/
+src-tauri/target/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# NOTE: droppers like *.bat/*.ps1/*.vbs are intentionally NOT ignored here,
+# so they stay visible in `git status`. The pre-commit hook blocks them.
