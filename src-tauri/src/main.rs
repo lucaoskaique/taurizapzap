@@ -34,10 +34,6 @@ fn main() {
             // Start memory monitoring
             memory::start_memory_monitor(app.handle().clone());
 
-            // NOTE: Webview refresh disabled for WhatsApp Web
-            // WhatsApp Web disconnects when the page is reloaded, causing "connected on another device" error
-            // memory::start_webview_refresh(app.handle().clone());
-
             log::info!("Memory management initialized");
 
             Ok(())
