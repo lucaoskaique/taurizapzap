@@ -7,23 +7,23 @@ license = "MPL-2.0"
 repository = "https://github.com/lucaoskaique/taurizapzap"
 default-run = "app"
 edition = "2021"
-rust-version = "1.57"
+rust-version = "1.95"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "2.5.5", features = [] }
+tauri-build = { version = "2.6.3", features = [] }
 
 [dependencies]
 tauri = { version = "2.10.0", features = ["devtools", "tray-icon", "image-png"] }
 tauri-plugin-shell = "2"
-log = "0.4.29"
+log = "0.4.33"
 fern = "0.7.1"
-chrono = "0.4.44"
+chrono = "0.4.45"
 tokio = { version = "1", features = ["rt-multi-thread", "time"] }
-sysinfo = "0.32"
-dirs = "5.0"
-rfd = "0.15"
+sysinfo = "0.39"
+dirs = "6.0"
+rfd = "0.17"
 
 [features]
 # by default Tauri runs in production mode
