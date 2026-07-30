@@ -4,10 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-pub mod api_client;
-pub mod bot;
 pub mod logging;
 pub mod memory;
 pub mod tray;
-pub mod whatsapp;
 pub mod window;
