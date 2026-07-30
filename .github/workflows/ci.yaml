@@ -38,6 +38,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # tauri::generate_context! validates that frontendDist (../dist) exists
+      # at compile time, so the frontend must be built before cargo runs.
+      - name: Build frontend
+        run: |
+          npm ci
+          npm run build
+
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
